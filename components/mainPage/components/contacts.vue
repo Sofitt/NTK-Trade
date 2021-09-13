@@ -7,7 +7,7 @@
       <h2 class="contacts__title">Контакты:</h2>
       <div class="contacts__inner">
         <span class="contacts__number mb">+7 495 929-70-78</span>
-        <a href="" class="contacts__email mb">welcome@ret-team.su</a>
+        <a href="" class="contacts__email link mb">welcome@ret-team.su</a>
         <p class="contacts__subtitle mb">Мы работаем в будни с 9:00 до 18:00.</p>
       </div>
     </div>
