@@ -1,6 +1,6 @@
 <template>
   <div :id="type+'List'" class="list">
-    <div class="list__item" :key="item.id" v-for="(item, index) of items" @click="setTitle(index, item.name)">
+    <div class="list__item" :key="item.id" v-for="(item, index) of items" @click="setTitle(index, item.name); updateValid()">
       {{ item.name }}
     </div>
   </div>
@@ -13,28 +13,33 @@ export default {
   components: {},
   data: function () {
     return {
-      setTitle(index, name) {
-        let currentList = document.getElementById(this.type+'List').childNodes;
-        let currentListNode = document.getElementById(this.type+'List');
-          if (this.type === 'town') {
-            this.$store.commit('townsList/setTown', name)
-            this.$store.commit('townsList/setLocation', index);
-            for (let i = 0; i < currentList.length; i++) {
-              currentList[i].style.fontWeight = 400;
-            }
-            currentList[index].style.fontWeight = 700;
 
-            this.$emit('changeShowState');
-          } else if (this.type === 'vacancy') {
-            this.$store.commit('vacanciesList/setVacancy', name);
-            currentListNode.previousElementSibling.style.borderBottomColor = '#D3232A';
-            currentListNode.previousElementSibling.childNodes[0].style.color = '#D3232A';
-            this.$emit('changeShowState');
-          }
-      }
     }
   },
-  methods: {},
+  methods: {
+    setTitle(index, name) {
+      let currentList = document.getElementById(this.type+'List').childNodes;
+      let currentListNode = document.getElementById(this.type+'List');
+      if (this.type === 'town') {
+        this.$store.commit('townsList/setTown', name)
+        this.$store.commit('townsList/setLocation', index);
+        for (let i = 0; i < currentList.length; i++) {
+          currentList[i].style.fontWeight = 400;
+        }
+        currentList[index].style.fontWeight = 700;
+
+        this.$emit('changeShowState');
+      } else if (this.type === 'vacancy') {
+        this.$store.commit('vacanciesList/setVacancy', name);
+        // currentListNode.previousElementSibling.style.borderBottomColor = '#D3232A';
+        currentListNode.previousElementSibling.childNodes[0].style.color = 'black';
+        this.$emit('changeShowState');
+      }
+    },
+    updateValid() {
+      this.$emit('updateValidity');
+    }
+  },
   computed: {
     townsList() {
       return this.$store.getters["townsList/getTowns"]

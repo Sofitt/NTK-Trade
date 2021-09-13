@@ -6,7 +6,7 @@
     </span>
       <span id="caret" class="drop__icon arrow down"></span>
     </button>
-    <list @changeShowState="isShowList = false" :isShowList="isShowList" :type="title.type" :items="items" v-show="isShowList === true"></list>
+    <list @changeShowState="isShowList = false" @updateValidity="updateValidity()" :isShowList="isShowList" :type="title.type" :items="items" v-show="isShowList === true"></list>
   </div>
 </template>
 
@@ -35,6 +35,9 @@ export default {
       } else {
         this.caret = target.childNodes[2];
       }
+    },
+    updateValidity() {
+      this.$emit('updateValidity');
     },
   },
   computed: {

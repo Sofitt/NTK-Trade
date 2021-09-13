@@ -12,7 +12,6 @@ export const state = () => ({
 export const mutations = {
   setVacancy(state, name) {
     state.currentVacancy = name;
-    // console.log(state.form);
   }
 }
 export const actions = {

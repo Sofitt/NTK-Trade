@@ -17,17 +17,28 @@
       <form class="main__form">
         <!-- NAME -->
         <label class="main__form-label">
-          <input type="text" class="main__input" placeholder="Как вас зовут?" @keydown="checkValidity()">
+          <input type="text" class="main__input" placeholder="Как вас зовут?"
+                 @keyup="checkValidity()"
+                 pattern="[а-яА-ЯёЁ]+" required>
+<!--                 @input="$event.target.value = $event.target.value.replace(/^[а-яА-Яa-zA-z\.\-\_]{2,20}$/i)"-->
         </label>
         <!-- EMAIL -->
         <label class="main__form-label-wName">
           <span class="main__form-title">Ваш E–mail</span>
-          <input type="email" class="main__input" placeholder="Введите E-mail" @keydown="checkValidity()">
+          <input type="email" class="main__input" placeholder="Введите E-mail"
+                 @keyup="checkValidity()"
+                 required>
         </label>
         <!-- DROPDOWN VACANCY -->
-        <dropdown :title="{name: 'Выберите вакансию', type: 'vacancy'}" :items="vacancies" class="vacancies"></dropdown>
+        <!-- this.isVacancySet = true -->
+        <dropdown :title="{name: 'Выберите вакансию', type: 'vacancy'}" :items="vacancies" class="vacancies"
+                  @click="checkValidity()"
+                  @keyup="checkValidity()"
+        @updateValidity="checkValidity()"></dropdown>
         <!-- ABOUT SELF -->
-        <textarea class="main__input" name="" id="" cols="30" rows="5" placeholder="Напишите о себе кратко" @keydown="checkValidity()"></textarea>
+        <textarea class="main__input" name="" id="" cols="30" rows="5" placeholder="Напишите о себе кратко"
+                  @keyup="checkValidity()"
+                  required></textarea>
 
         <!-- DRAG & DROP -->
         <clipDocs></clipDocs>
@@ -35,7 +46,7 @@
         <!-- POLITICS -->
         <div class="main__politics">
           <label class="main__politics-block" @click="checkValidity()">
-            <input type="checkbox" class="main__checkbox" v-model="agreement">
+            <input type="checkbox" class="main__checkbox" required v-model="agreement">
             <p class="main__politics-text">
               Я соглашаюсь с
               <a href="" class="main__conf link">политикой конфиденциальности</a>
@@ -72,12 +83,15 @@ export default {
   },
   methods: {
     checkValidity() {
-      inputValidator.isValid(this.inputs, this.submitBtn)
+      inputValidator.isValid(this.inputs, this.submitBtn, {agree: this.agreement, vacancy: this.isVacancySet})
     }
   },
   computed: {
     vacancies() {
       return this.$store.getters["vacanciesList/getVacancies"];
+    },
+    isVacancySet() {
+      return this.$store.getters["vacanciesList/getCurrentVacancy"] !== '';
     },
     towns() {
       return this.$store.getters["townsList/getTowns"];
@@ -87,13 +101,9 @@ export default {
     }
   },
   watch: {
-    // agreement(value) {
-    //   if (value === true) {
-    //     this.submitBtn.disabled = false;
-    //   } else {
-    //     this.submitBtn.disabled = true;
-    //   }
-    // }
+    agreement() {
+      this.checkValidity();
+    }
   },
   mounted() {
     this.inputs = document.querySelectorAll('.main__input');
@@ -166,6 +176,9 @@ export default {
       margin-bottom: 40px;
 
       border-bottom: 2px solid #F4F5F7;
+      &:focus-within {
+        border-bottom: 2px solid #D3232A;
+      }
 
       &-wName {
         cursor: default;
@@ -176,6 +189,10 @@ export default {
         margin-bottom: 40px;
 
         border-bottom: 2px solid #F4F5F7;
+
+        &:focus-within {
+          border-bottom: 2px solid #D3232A;
+        }
       }
     }
 
@@ -228,8 +245,7 @@ export default {
       margin-bottom: 24px;
 
       &:focus-within {
-        padding-left: 2px;
-        box-shadow: 0px 0px 0px 1px rgba(211, 35, 42, 1);
+        border-bottom: 2px solid #D3232A;
       }
     }
 
@@ -283,6 +299,9 @@ export default {
 // Link
 .link {
   color: rgba(211, 35, 42, 1);
+  &:hover {
+    color: rgb(245, 28, 37);
+  }
 }
 
 textarea {
@@ -291,6 +310,11 @@ textarea {
   width: 100%;
   max-width: 614px;
   margin-bottom: 24px;
+  resize:none;
+
+  &:focus-within {
+    border-bottom: 2px solid #D3232A;
+  }
 }
 
 // Custom checkboxes
@@ -325,8 +349,7 @@ input[type="checkbox"]:checked:before {
 // Dropdown
 .drop {
   &:focus-within {
-    margin-left: -1px;
-    box-shadow: -5px 0px 0px 0px rgba(211, 35, 42, 0.2);
+    border-bottom: 2px solid #D3232A;
   }
 }
 //========Города
