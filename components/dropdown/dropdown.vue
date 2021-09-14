@@ -19,14 +19,14 @@ export default {
   data: function () {
     return {
       isShowList: false,
-
-      titleHTML: '',
-      townList: '',
-      vacancyList: '',
       caret: '',
     }
   },
   methods: {
+    /**
+     * Показать список
+     * @param target
+     */
     showList(target) {
       this.isShowList = !this.isShowList;
       console.log(target);
@@ -36,6 +36,9 @@ export default {
         this.caret = target.childNodes[2];
       }
     },
+    /**
+     * Проверка валидности
+     */
     updateValidity() {
       this.$emit('updateValidity');
     },

@@ -28,9 +28,6 @@ export default {
     }
   },
   watch: {
-    mapLink(value) {
-      console.log(value);
-    }
   },
   mounted() {
 
