@@ -9,9 +9,12 @@ Vue,
 Vuex,
 Scss
 
-PC
+###PC
+
 ![1](https://user-images.githubusercontent.com/81359836/133272276-c57b0dbc-99e4-43f2-9969-db6581b8bb69.JPG)
-Mobile
+
+###Mobile
+
 ![2](https://user-images.githubusercontent.com/81359836/133272281-44cc2f82-79f1-44c6-b58d-ee7090c4ed34.JPG)
 
 
