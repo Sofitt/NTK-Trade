@@ -3,7 +3,7 @@
            @dragover.prevent @drop.prevent @drop="dragFile">
     <div class="clip__header">
       <img src="../../assets/svg/paperclip.svg" alt="" class="clip__img">
-      <span class="clip__text">Прикрепить документы</span>
+      <h2 class="clip__text">Прикрепить документы</h2>
     </div>
     <input type="file" class="clip__input" multiple @change="uploadFile">
     <div class="clip__list" v-if="file.length">

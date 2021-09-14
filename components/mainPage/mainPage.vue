@@ -36,7 +36,7 @@
                   @keyup="checkValidity()"
         @updateValidity="checkValidity()"></dropdown>
         <!-- ABOUT SELF -->
-        <textarea class="main__input" name="" id="" cols="30" rows="5" placeholder="Напишите о себе кратко"
+        <textarea class="main__input" name="aboutSelf" id="" cols="30" rows="5" placeholder="Напишите о себе кратко"
                   @keyup="checkValidity()"
                   required></textarea>
 
@@ -47,11 +47,11 @@
         <div class="main__politics">
           <label class="main__politics-block" @click="checkValidity()">
             <input type="checkbox" class="main__checkbox" required v-model="agreement">
-            <p class="main__politics-text">
+            <span class="main__politics-text">
               Я соглашаюсь с
-              <a href="" class="main__conf link">политикой конфиденциальности</a>
+              <a href="#" target="_blank" class="main__conf link">политикой конфиденциальности</a>
               , нажимая на кнопку “Откликнуться”
-            </p>
+            </span>
           </label>
           <!-- SUBMIT BTN -->
           <button disabled id="submit" class="main__submit" @click.prevent="sendData()">Откликнуться</button>

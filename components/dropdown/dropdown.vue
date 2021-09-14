@@ -1,10 +1,10 @@
 <template>
   <div class="drop">
     <button type="button" class="drop__btn" @click="showList($event.target)">
-    <span id="title" class="drop__title">
+    <span class="drop__title">
       {{ currentTitle }}
     </span>
-      <span id="caret" class="drop__icon arrow down"></span>
+      <span class="drop__icon arrow down"></span>
     </button>
     <list @changeShowState="isShowList = false" @updateValidity="updateValidity()" :isShowList="isShowList" :type="title.type" :items="items" v-show="isShowList === true"></list>
   </div>
