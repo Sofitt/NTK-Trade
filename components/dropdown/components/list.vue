@@ -40,19 +40,6 @@ export default {
       this.$emit('updateValidity');
     }
   },
-  computed: {
-    townsList() {
-      return this.$store.getters["townsList/getTowns"]
-    },
-    vacanciesList() {
-      return this.$store.getters["vacanciesList/getVacancies"]
-    }
-
-  },
-  watch: {},
-  mounted() {
-
-  },
 }
 </script>
 

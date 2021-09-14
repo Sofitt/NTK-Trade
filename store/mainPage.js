@@ -1,17 +1,14 @@
 export const state = () => ({
-  currentTitle: '',
-  form: [{town: 'Нижний Новгород', name: '', email: '', vacancy: '', about: '',}],
-  showState: true,
-
+  dataToSend: '',
 })
 export const mutations = {
-  setShowState(state) {
-    state.showState = !state.showState;
-  }
-}
-export const actions = {}
-export const getters = {
-  getShowState(state) {
-    return state.showState;
+  /**
+   * Формирует массив данных на основании введенной в поля информации
+   * @param state
+   * @param data
+   */
+  setDataToSend(state, data) {
+    state.dataToSend = data;
+    console.log(data);
   }
 }

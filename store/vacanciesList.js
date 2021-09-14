@@ -6,16 +6,17 @@ export const state = () => ({
     {name: 'SEO специалист'},
     {name: 'Контент менеджер'}
   ],
-  showVacancies: false,
   currentVacancy: '',
 })
 export const mutations = {
+  /**
+   * Установить значение для списка вакансий
+   * @param state
+   * @param name
+   */
   setVacancy(state, name) {
     state.currentVacancy = name;
   }
-}
-export const actions = {
-
 }
 export const getters = {
   getVacancies(state) {

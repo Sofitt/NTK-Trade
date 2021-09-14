@@ -1,60 +1,66 @@
 <template>
-<section id="clipArea" class="clip"
-         @dragover="dragover" @dragleave="dragleave" @drop="drop">
-  <div class="clip__header">
-    <img src="../../assets/svg/paperclip.svg" alt="" class="clip__img">
-    <span class="clip__text">Прикрепить документы</span>
-  </div>
-  <div class="clip__list" v-for="file in filelist">
-    ${ file.name }
-    <button class="clip__btn" type="button"
-            @click="remove(filelist.indexOf(file))"
-            title="Remove file">remove</button>
-  </div>
-</section>
+  <section id="clipArea" class="clip"
+           @dragover.prevent @drop.prevent @drop="dragFile">
+    <div class="clip__header">
+      <img src="../../assets/svg/paperclip.svg" alt="" class="clip__img">
+      <span class="clip__text">Прикрепить документы</span>
+    </div>
+    <input type="file" class="clip__input" multiple @change="uploadFile">
+    <div class="clip__list" v-if="file.length">
+      <div class="clip__item" :key="item.id" v-for="(item, index) in file">
+        <span class="clip__item-text">{{ item.name }}</span>
+        <button class="clip__btn" type="button"
+                @click="remove(index, $event.target)"
+        >
+          <img src="../../assets/svg/trash.svg" alt="" class="clip__remove">
+        </button>
+      </div>
+
+    </div>
+  </section>
 </template>
 
 <script>
 export default {
   name: "clipDocs",
-  delimiters: ['${', '}'],
   components: {},
   data: function () {
     return {
-      filelist: [],
+      file: []
     }
   },
   methods: {
-    onChange() {
-      this.filelist = [...this.$refs.file.files];
+    /**
+     * Загрузка файла через инпут
+     * @param e
+     */
+    uploadFile(e) {
+      this.file.push(e.target.files[0]);
+      this.$store.commit('clip/setFiles', this.file);
     },
-    remove(i) {
-      this.filelist.splice(i, 1);
+    /**
+     * Загрузка dragDrop
+     * @param e
+     */
+    dragFile(e) {
+      this.file.push(e.dataTransfer.files[0]);
+      this.$store.commit('clip/setFiles', this.file);
     },
-    dragover(event) {
-      event.preventDefault();
-      // Add some visual fluff to show the user can drop its files
-      if (!event.currentTarget.classList.contains('bg-green-300')) {
-        event.currentTarget.classList.remove('bg-gray-100');
-        event.currentTarget.classList.add('bg-green-300');
-      }
-    },
-    dragleave(event) {
-      // Clean up
-      event.currentTarget.classList.add('bg-gray-100');
-      event.currentTarget.classList.remove('bg-green-300');
-    },
-    drop(event) {
-      event.preventDefault();
-      this.$refs.file.files = event.dataTransfer.files;
-      this.onChange(); // Trigger the onChange event manually
-      // Clean up
-      event.currentTarget.classList.add('bg-gray-100');
-      event.currentTarget.classList.remove('bg-green-300');
+    /**
+     * Удалить item
+     * @param index
+     * @param target
+     */
+    remove(index, target) {
+      this.file.splice(index, 1);
+      this.$store.commit('clip/setFiles', this.file);
+      console.log(this.file);
+      console.log(target.parentNode);
     }
   },
   computed: {},
-  watch: {},
+  watch: {
+  },
   mounted() {
 
   }
@@ -74,16 +80,55 @@ export default {
     justify-content: space-between;
     max-width: 243px;
   }
+
   &__img {
     width: 32px;
     height: 32px;
   }
+
   &__text {
     font-family: Montserrat;
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
     line-height: 20px;
+  }
+&__list {
+  margin-top: 24px;
+}
+  &__item {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    width: 100%;
+    height: 25px;
+    border-bottom: 1px solid rgba(211, 35, 42, 0);
+
+    &:hover {
+      border-bottom: 1px solid #D3232A;
+    }
+
+    &-text {
+      color: #737373;
+
+      font-family: Montserrat;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 180%;
+      /* or 25px */
+    }
+  }
+
+  &__btn {
+    background: transparent;
+  }
+
+  &__remove {
+    width: 24px;
+    height: 24px;
   }
 }
 </style>

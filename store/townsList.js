@@ -5,24 +5,26 @@ export const state = () => ({
     {name: 'Казань', location: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8971.26916005928!2d49.1321356107727!3d55.796410469952036!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x415ead1359b393b7%3A0xe3164d3cbdfeadc9!2z0J_Rj9GC0LXRgNC-0YfQutCw!5e0!3m2!1sru!2sru!4v1631537850437!5m2!1sru!2sru'},
     {name: 'Нижний новгород', location: 'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2213.9039796422508!2d43.9447379!3d56.2969703!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4151d58dfdad0d59%3A0x2d00110fcb9eb214!2z0JrQvtC80YHQvtC80L7Qu9GM0YHQutCw0Y8g0L_Quy4sIDIsINCd0LjQttC90LjQuSDQndC-0LLQs9C-0YDQvtC0LCDQndC40LbQtdCz0L7RgNC-0LTRgdC60LDRjyDQvtCx0LsuLCA2MDMwMTE!5e0!3m2!1sru!2sru!4v1631526453103!5m2!1sru!2sru'},
   ],
-  showTowns: false,
   currentLocation: 'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2213.9039796422508!2d43.9447379!3d56.2969703!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4151d58dfdad0d59%3A0x2d00110fcb9eb214!2z0JrQvtC80YHQvtC80L7Qu9GM0YHQutCw0Y8g0L_Quy4sIDIsINCd0LjQttC90LjQuSDQndC-0LLQs9C-0YDQvtC0LCDQndC40LbQtdCz0L7RgNC-0LTRgdC60LDRjyDQvtCx0LsuLCA2MDMwMTE!5e0!3m2!1sru!2sru!4v1631526453103!5m2!1sru!2sru',
   currentTown: '',
 })
 export const mutations = {
+  /**
+   * Текущий город
+   * @param state
+   * @param name
+   */
   setTown(state, name) {
     state.currentTown = name;
   },
+  /**
+   * Ссылка на карту
+   * @param state
+   * @param index
+   */
   setLocation(state, index) {
     state.currentLocation = state.towns[index].location;
-    // state.form[0].town = state.towns[index].name;
-  },
-  changeShowState(state) {
-    return state.showTowns = !state.showTowns;
   }
-}
-export const actions = {
-
 }
 export const getters = {
   getTowns(state) {

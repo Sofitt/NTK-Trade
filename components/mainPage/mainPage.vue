@@ -54,7 +54,7 @@
             </p>
           </label>
           <!-- SUBMIT BTN -->
-          <button disabled id="submit" class="main__submit">Откликнуться</button>
+          <button disabled id="submit" class="main__submit" @click.prevent="sendData()">Откликнуться</button>
         </div>
       </form>
 
@@ -82,8 +82,29 @@ export default {
     }
   },
   methods: {
+    /**
+     * Проверка валидности полей для разблокировки кнопки отправки
+     */
     checkValidity() {
       inputValidator.isValid(this.inputs, this.submitBtn, {agree: this.agreement, vacancy: this.isVacancySet})
+    },
+    /**
+     * Собрать введённые данные с полей и списков в массив
+     */
+    sendData() {
+      let currentVacancy = this.$store.getters["vacanciesList/getCurrentVacancy"];
+      let currentTown = this.$store.getters["townsList/getCurrentTown"];
+      let currentFiles = this.$store.getters["clip/getFiles"];
+      this.$store.commit('mainPage/setDataToSend',
+        {
+          town: currentTown,
+          name: this.inputs[0].value,
+          email: this.inputs[1].value,
+          vacancy: currentVacancy,
+          aboutSelf: this.inputs[2].value,
+          files: currentFiles,
+          agreement: this.agreement}
+      )
     }
   },
   computed: {
@@ -243,8 +264,9 @@ export default {
       flex-flow: row;
       align-items: center;
       margin-bottom: 24px;
+      border-bottom: 2px solid rgba(211, 35, 42, 0);
 
-      &:focus-within {
+      &:focus-within, &:active {
         border-bottom: 2px solid #D3232A;
       }
     }
@@ -312,6 +334,8 @@ textarea {
   margin-bottom: 24px;
   resize:none;
 
+  border-bottom: 2px solid #F4F5F7;
+
   &:focus-within {
     border-bottom: 2px solid #D3232A;
   }
@@ -347,16 +371,11 @@ input[type="checkbox"]:checked:before {
 }
 
 // Dropdown
-.drop {
-  &:focus-within {
-    border-bottom: 2px solid #D3232A;
-  }
-}
 //========Города
 .towns {
   display: flex;
   flex-flow: column;
-  align-items: flex-start;
+  align-items: center;
   margin-left: 16px;
   background: transparent;
 
@@ -392,6 +411,9 @@ input[type="checkbox"]:checked:before {
 .vacancies {
   width: 100%;
   margin-bottom: 40px;
+  >button:focus-within {
+    border-bottom: 2px solid #D3232A;
+  }
   .drop__btn {
 
     width: 100%;
@@ -464,8 +486,4 @@ max-width: 100%;
     font-size: 24px;
   }
 }
-
-//@media (max-width: 1175px) {
-
-//}
 </style>
